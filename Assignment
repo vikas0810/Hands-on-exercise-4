@@ -1,0 +1,87 @@
+#To get current working directory
+
+getwd()
+
+#Change the working directory 
+
+setwd("C:/Users/admin1/Studies/AMMA")
+
+#Reading datasets
+
+data1=read.table("student-mat.csv",sep=";",header=TRUE)
+data2=read.table("student-por.csv",sep=";",header=TRUE)
+
+#Merging datasets
+
+data3=merge(data1,data2,by=c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet"))
+
+print(nrow(data3)) 
+
+View(data1)
+View(data3)
+class(data3)
+
+#Initializing variables for mean grade,both males and females
+
+mean_grade_F=0
+mean_grade_M=0
+
+for(i in 1:length(data3$G3.x))
+{
+  if(data3$sex[i]=="F")
+  {  mean_grade_F = mean_grade_F + data3$G3.x[i] + data3$G3.y[i]
+  }
+  else
+  {
+    mean_grade_M = mean_grade_M + data3$G3.x[i] + data3$G3.y[i]
+  }
+}
+mean_grade_M = mean_grade_M/length(data3$G3.x)
+mean_grade_F = mean_grade_F/length(data3$G3.x)
+
+mean_grade_F
+mean_grade_M  
+
+
+#Finding the highest grades
+
+Highest_G1 = max(data3$G1.x + data3$G1.y)
+Highest_G2 = max(data3$G2.x + data3$G2.y)
+Highest_G3 = max(data3$G3.x + data3$G3.y)
+
+for(j in 1:length(data3$G3.x))
+{  
+  if(data3$G1.x[j]+data3$G1.y[j] == Highest_G1)
+  {Guardian_G1 = data3$guardian.x[j]
+  Gender_G1 = data3$sex[j]
+  }
+}  
+
+
+Guardian_G1
+
+Gender_G1
+
+for(j in 1:length(data3$G3.x))
+{  
+  if(data3$G2.x[j]+data3$G2.y[j] == Highest_G1)
+  {Guardian_G2 = data3$guardian.x[j]
+  Gender_G2 = data3$sex[j]
+  }
+}  
+
+Guardian_G2
+
+Gender_G2
+
+for(j in 1:length(data3$G3.x))
+{  
+  if(data3$G3.x[j]+data3$G3.y[j] == Highest_G1)
+  {Guardian_G3 = data3$guardian.x[j]
+  Gender_G3 = data3$sex[j]
+  }
+}  
+
+Guardian_G3
+
+Gender_G3
